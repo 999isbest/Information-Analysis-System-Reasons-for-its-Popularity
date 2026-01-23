@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <!-- 优化viewport设置，增强移动端适配 -->
+    <!-- 优化viewport设置，提升移动端适配精度 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>信息分析系统</title>
     <style>
@@ -19,11 +19,13 @@
             font-family: 'Courier New', monospace;
             min-height: 100vh;
             position: relative;
-            overflow-x: hidden; /* 只隐藏水平滚动 */
+            overflow-x: hidden; /* 只隐藏水平滚动，保留垂直滚动 */
             transition: all 0.3s ease;
-            /* 确保body居中 */
-            margin: 0 auto;
-            max-width: 100%;
+            display: flex;
+            justify-content: center; /* 全局居中 */
+            align-items: flex-start;
+            padding: 0;
+            margin: 0 auto; /* 确保body本身居中 */
         }
 
         body::before {
@@ -38,9 +40,6 @@
                 linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
             background-size: 40px 40px;
             z-index: 0;
-            /* 适配旋转后的背景 */
-            transform: inherit;
-            transform-origin: inherit;
         }
 
         /* ========== 加载动画样式 ========== */
@@ -50,10 +49,12 @@
             justify-content: center;
             align-items: center;
             width: 100%;
+            max-width: 1200px; /* 限制最大宽度 */
             height: 100vh;
             position: fixed;
             top: 0;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%); /* 绝对居中 */
             background: #000814;
             z-index: 9999;
             transition: opacity 0.8s ease-out;
@@ -71,8 +72,6 @@
                          0 0 20px rgba(56, 189, 248, 0.5);
             animation: pulse 2s infinite alternate;
             text-align: center;
-            /* 适配移动端字号 */
-            font-size: clamp(2rem, 10vw, 6rem);
         }
 
         /* 标题呼吸动画 */
@@ -90,14 +89,12 @@
             position: relative;
             z-index: 1;
             text-align: center;
-            /* 适配移动端字号 */
-            font-size: clamp(0.8rem, 3vw, 1.2rem);
         }
 
         /* 加载日志文本容器 */
         .loading-log {
             width: 400px;
-            max-width: 80%; /* 适配移动端宽度 */
+            max-width: 90%; /* 适配移动端宽度 */
             margin-bottom: 30px;
             position: relative;
             z-index: 1;
@@ -109,8 +106,6 @@
             margin-bottom: 8px;
             opacity: 0;
             animation: fadeIn 0.5s forwards;
-            /* 适配移动端字号 */
-            font-size: clamp(0.8rem, 2vw, 1rem);
         }
 
         /* 逐个延迟显示日志文本 */
@@ -130,7 +125,7 @@
         /* 进度条容器 */
         .progress-container {
             width: 400px;
-            max-width: 80%; /* 适配移动端宽度 */
+            max-width: 90%; /* 适配移动端宽度 */
             height: 8px;
             background: #001233;
             border: 1px solid #6366f1;
@@ -171,9 +166,6 @@
             position: relative;
             z-index: 1;
             text-transform: uppercase;
-            /* 适配移动端按钮大小 */
-            padding: clamp(8px, 3vw, 12px) clamp(20px, 5vw, 30px);
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
         }
 
         /* 按钮hover效果 */
@@ -220,9 +212,9 @@
             position: relative;
             z-index: 1;
             display: none;
-            /* 确保容器居中 */
-            margin: 0 auto;
-            max-width: 100%;
+            width: 100%;
+            max-width: 1400px; /* 限制最大宽度，避免大屏拉伸 */
+            margin: 0 auto; /* 主容器居中 */
         }
 
         .header {
@@ -263,9 +255,6 @@
             align-items: center;
             gap: 12px;
             text-align: justify;
-            /* 适配移动端字号 */
-            font-size: clamp(1.2rem, 4vw, 2.2rem);
-            letter-spacing: clamp(2px, 1vw, 4px);
         }
 
         .header h1::before {
@@ -287,16 +276,11 @@
             align-items: center;
             gap: 8px;
             text-align: justify;
-            /* 适配移动端字号 */
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            padding-left: clamp(10px, 3vw, 24px);
         }
 
         .record-date::before {
             content: "📅";
             font-size: 1.2rem;
-            /* 适配移动端图标大小 */
-            font-size: clamp(1rem, 2vw, 1.2rem);
         }
 
         .sidebar-left {
@@ -344,9 +328,6 @@
             font-weight: 700;
             letter-spacing: 2px;
             width: 100%;
-            /* 适配移动端字号 */
-            font-size: clamp(1rem, 3vw, 1.3rem);
-            letter-spacing: clamp(1px, 0.5vw, 2px);
         }
 
         .nav-buttons {
@@ -372,9 +353,6 @@
             gap: 10px;
             position: relative;
             overflow: hidden;
-            /* 适配移动端按钮大小 */
-            padding: clamp(10px, 3vw, 14px) clamp(15px, 3vw, 20px);
-            font-size: clamp(0.9rem, 2vw, 1.05rem);
         }
 
         .nav-btn::before {
@@ -406,8 +384,6 @@
             font-size: 0.8rem;
             color: var(--text-medium);
             transition: all 0.3s ease;
-            /* 适配移动端箭头大小 */
-            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
         }
 
         .nav-btn:hover::after {
@@ -437,8 +413,6 @@
                 0 0 20px var(--shadow-blue),
                 inset 0 1px 0 rgba(255, 255, 255, 0.05);
             border-radius: 12px;
-            /* 适配移动端内边距 */
-            padding: clamp(15px, 3vw, 30px);
         }
 
         .content-section {
@@ -446,10 +420,6 @@
             margin-bottom: 40px;
             border-bottom: 1px solid rgba(37, 99, 235, 0.5);
             padding-bottom: 30px;
-            /* 确保内容居中 */
-            margin-left: auto;
-            margin-right: auto;
-            max-width: 100%;
         }
 
         .content-section.active {
@@ -481,11 +451,6 @@
             align-items: center;
             gap: 12px;
             text-align: justify;
-            /* 适配移动端字号 */
-            font-size: clamp(1.4rem, 4vw, 1.8rem);
-            letter-spacing: clamp(2px, 0.8vw, 3px);
-            margin-bottom: clamp(15px, 3vw, 25px);
-            padding-left: clamp(15px, 2vw, 20px);
         }
 
         .section-title::after {
@@ -494,8 +459,6 @@
             height: 1px;
             background: linear-gradient(90deg, var(--accent-blue), transparent);
             margin-left: 15px;
-            /* 适配移动端间距 */
-            margin-left: clamp(10px, 2vw, 15px);
         }
 
         .main-tab-nav {
@@ -503,8 +466,6 @@
             gap: 12px;
             margin-bottom: 25px;
             flex-wrap: wrap;
-            /* 确保标签栏居中 */
-            justify-content: center;
         }
 
         .main-tab-btn {
@@ -520,9 +481,6 @@
             line-height: 1.5;
             position: relative;
             overflow: hidden;
-            /* 适配移动端按钮大小 */
-            padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 24px);
-            font-size: clamp(0.9rem, 2vw, 1rem);
         }
 
         .main-tab-btn::before {
@@ -572,10 +530,6 @@
             margin-left: auto;
             margin-right: auto;
             max-width: 800px;
-            /* 适配移动端卡片样式 */
-            padding: clamp(15px, 3vw, 25px);
-            margin-bottom: clamp(15px, 3vw, 25px);
-            max-width: 100%;
         }
 
         .content-card::before {
@@ -587,9 +541,6 @@
             height: 40px;
             background: linear-gradient(135deg, transparent 50%, rgba(59, 130, 246, 0.1) 50%);
             border-bottom-left-radius: 100%;
-            /* 适配移动端装饰大小 */
-            width: clamp(30px, 5vw, 40px);
-            height: clamp(30px, 5vw, 40px);
         }
 
         .content-card:hover {
@@ -613,17 +564,11 @@
             align-items: center;
             gap: 10px;
             text-align: justify;
-            /* 适配移动端字号 */
-            font-size: clamp(1.2rem, 3vw, 1.4rem);
-            margin-bottom: clamp(10px, 2vw, 15px);
-            padding-bottom: clamp(5px, 1vw, 8px);
         }
 
         .card-title::before {
             content: "📌";
             font-size: 1.2rem;
-            /* 适配移动端图标大小 */
-            font-size: clamp(1rem, 2vw, 1.2rem);
         }
 
         .card-content {
@@ -633,10 +578,6 @@
             letter-spacing: 0.3px;
             text-align: justify;
             text-align-last: left;
-            /* 适配移动端字号和行高 */
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            line-height: clamp(1.5, 1vw, 1.7);
-            letter-spacing: clamp(0.2px, 0.1vw, 0.3px);
         }
 
         .card-content p {
@@ -646,8 +587,6 @@
             padding-left: 0;
             text-align-last: left;
             text-indent: 2em;
-            /* 适配移动端段落间距 */
-            margin-bottom: clamp(10px, 2vw, 15px);
         }
 
         .card-content p:last-child {
@@ -659,28 +598,21 @@
             text-shadow: 0 0 8px rgba(6, 182, 212, 0.2);
         }
 
-        /* 高亮文本样式 */
         .highlight-text {
             font-size: 1.25rem !important;
             font-weight: 500;
             text-align: justify !important;
             text-align-last: left !important;
             text-indent: 2em !important;
-            /* 适配移动端字号 */
-            font-size: clamp(1rem, 2.5vw, 1.25rem) !important;
         }
 
-        /* 括号内文字的突出强调样式 */
         .emphasis-text {
             color: var(--new-accent-cyan);
             font-weight: bold;
             text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
             font-size: 1.3rem !important;
-            /* 适配移动端字号 */
-            font-size: clamp(1.1rem, 2.8vw, 1.3rem) !important;
         }
 
-        /* 分析总结文本样式 */
         .analysis-text {
             font-size: 1.25rem !important;
             font-weight: normal !important;
@@ -689,29 +621,21 @@
             text-align: justify !important;
             text-align-last: left !important;
             text-indent: 2em !important;
-            /* 适配移动端字号 */
-            font-size: clamp(1rem, 2.5vw, 1.25rem) !important;
         }
 
-        /* 下划线样式 */
         .underline-text {
             text-decoration: underline;
             text-decoration-color: var(--new-accent-cyan);
             text-decoration-thickness: 2px;
             text-underline-offset: 4px;
-            /* 适配移动端下划线 */
-            text-decoration-thickness: clamp(1px, 0.2vw, 2px);
-            text-underline-offset: clamp(2px, 0.5vw, 4px);
         }
 
-        /* 传播链特殊色号样式 */
         .chain-color-text {
             color: var(--chain-special-color) !important;
             font-weight: normal !important;
             text-shadow: none !important;
         }
 
-        /* 分析总结模块专用的取消突出样式 */
         #analysis .card-content .no-highlight {
             color: var(--text-white) !important;
             font-weight: normal !important;
@@ -719,7 +643,7 @@
             text-decoration: none !important;
         }
 
-        /* 图片样式 */
+        /* 图片样式优化：增加响应式适配 */
         .reference-img {
             width: 100%;
             max-width: 400px;
@@ -729,13 +653,8 @@
             border: 1px solid var(--accent-purple);
             box-shadow: 0 0 15px var(--shadow-purple);
             object-fit: contain;
-            /* 适配移动端图片大小 */
-            max-width: clamp(200px, 90%, 400px);
-            margin: clamp(10px, 3vw, 20px) auto;
-            border-radius: clamp(6px, 1vw, 8px);
         }
 
-        /* 图片并排容器样式 */
         .img-row-container {
             display: flex;
             gap: 20px;
@@ -743,9 +662,6 @@
             justify-content: center;
             flex-wrap: wrap;
             position: relative;
-            /* 适配移动端间距 */
-            gap: clamp(10px, 2vw, 20px);
-            margin: clamp(10px, 3vw, 20px) auto;
         }
 
         .img-row-container .reference-img {
@@ -753,12 +669,8 @@
             margin: 0;
             flex: 1;
             min-width: 200px;
-            /* 适配移动端并排图片 */
-            max-width: clamp(150px, 45%, 300px);
-            min-width: clamp(120px, 30%, 200px);
         }
 
-        /* 图片标注样式 */
         .img-caption {
             font-size: 0.9rem;
             color: var(--text-medium);
@@ -771,12 +683,8 @@
             margin-left: auto;
             margin-right: auto;
             text-indent: 0 !important;
-            /* 适配移动端标注字号 */
-            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
-            margin-top: clamp(8px, 1.5vw, 10px);
         }
 
-        /* 九宫格下方标注样式 */
         .grid-caption {
             font-size: 0.9rem;
             color: var(--text-medium);
@@ -789,9 +697,6 @@
             margin-left: auto;
             margin-right: auto;
             text-indent: 0 !important;
-            /* 适配移动端标注字号 */
-            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
-            margin-top: clamp(10px, 2vw, 15px);
         }
 
         .copy-frame {
@@ -800,10 +705,6 @@
             background: rgba(17, 34, 64, 0.8);
             border-radius: 10px;
             border: 1px solid var(--accent-purple);
-            /* 适配移动端容器 */
-            margin-top: clamp(15px, 3vw, 20px);
-            padding: clamp(10px, 2vw, 15px);
-            border-radius: clamp(8px, 1.5vw, 10px);
         }
 
         .frame-input {
@@ -820,12 +721,6 @@
             border-radius: 8px;
             box-shadow: inset 0 0 10px rgba(139, 92, 246, 0.2);
             transition: border-color 0.3s ease;
-            /* 适配移动端输入框 */
-            padding: clamp(10px, 2vw, 15px);
-            margin-bottom: clamp(10px, 2vw, 15px);
-            height: clamp(80px, 15vw, 100px);
-            font-size: clamp(0.9rem, 2vw, 1rem);
-            border-radius: clamp(6px, 1vw, 8px);
         }
 
         .frame-input:focus {
@@ -847,11 +742,6 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            /* 适配移动端按钮 */
-            padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 24px);
-            font-size: clamp(0.9rem, 2vw, 1rem);
-            border-radius: clamp(6px, 1vw, 8px);
-            gap: clamp(5px, 1vw, 8px);
         }
 
         .copy-btn:hover {
@@ -869,10 +759,6 @@
             border: 1px solid var(--accent-purple);
             border-radius: 10px;
             box-shadow: inset 0 0 10px rgba(139, 92, 246, 0.2);
-            /* 适配移动端容器 */
-            margin-top: clamp(15px, 3vw, 25px);
-            padding: clamp(15px, 2vw, 20px);
-            border-radius: clamp(8px, 1.5vw, 10px);
         }
 
         .chain-node {
@@ -893,13 +779,6 @@
             text-align: justify;
             text-indent: 0 !important;
             font-size: 1.05rem;
-            /* 适配移动端节点样式 */
-            gap: clamp(10px, 2vw, 15px);
-            margin-bottom: clamp(10px, 2vw, 18px);
-            padding: clamp(8px, 2vw, 12px);
-            padding-left: clamp(15px, 2vw, 20px);
-            font-size: clamp(0.9rem, 2vw, 1.05rem);
-            border-radius: 0 clamp(6px, 1vw, 8px) clamp(6px, 1vw, 8px) 0;
         }
 
         .chain-node:hover {
@@ -919,10 +798,6 @@
             box-shadow: 0 0 10px var(--accent-cyan), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             flex-shrink: 0;
             margin-top: 3px;
-            /* 适配移动端圆点大小 */
-            width: clamp(12px, 2vw, 16px);
-            height: clamp(12px, 2vw, 16px);
-            margin-top: clamp(2px, 0.5vw, 3px);
         }
 
         .content-block {
@@ -956,20 +831,11 @@
             z-index: 9999;
             text-align: justify;
             text-indent: 0 !important;
-            /* 适配移动端提示框 */
-            bottom: clamp(20px, 5vw, 40px);
-            right: clamp(20px, 5vw, 40px);
-            padding: clamp(10px, 3vw, 15px) clamp(20px, 5vw, 30px);
-            border-radius: clamp(8px, 1.5vw, 10px);
-            letter-spacing: clamp(1px, 0.5vw, 2px);
-            gap: clamp(5px, 1vw, 10px);
         }
 
         .copy-toast::before {
             content: "✓";
             font-size: 1.2rem;
-            /* 适配移动端对勾大小 */
-            font-size: clamp(1rem, 2vw, 1.2rem);
         }
 
         .copy-toast.show {
@@ -977,13 +843,10 @@
             transform: translateY(-10px);
         }
 
-        /* 下一步按钮样式 */
         .next-step-btn-container {
             margin-top: 40px;
             text-align: center;
             width: 100%;
-            /* 适配移动端间距 */
-            margin-top: clamp(20px, 5vw, 40px);
         }
 
         .next-step-btn {
@@ -1001,12 +864,6 @@
             box-shadow: 0 0 20px var(--shadow-purple), 0 4px 10px rgba(0, 0, 0, 0.2);
             display: inline-block;
             text-decoration: none;
-            /* 适配移动端按钮 */
-            padding: clamp(12px, 4vw, 18px) clamp(25px, 8vw, 40px);
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            letter-spacing: clamp(2px, 0.8vw, 3px);
-            border-radius: clamp(8px, 2vw, 12px);
-            border-width: clamp(1px, 0.2vw, 2px);
         }
 
         .next-step-btn:hover {
@@ -1019,24 +876,16 @@
         ::-webkit-scrollbar {
             width: 10px;
             height: 10px;
-            /* 适配移动端滚动条 */
-            width: clamp(6px, 1vw, 10px);
-            height: clamp(6px, 1vw, 10px);
         }
         ::-webkit-scrollbar-track {
             background: var(--primary-blue);
             border-radius: 5px;
-            /* 适配移动端滚动条轨道 */
-            border-radius: clamp(3px, 0.5vw, 5px);
         }
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
             border-radius: 5px;
             box-shadow: 0 0 8px var(--shadow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(0, 0, 0, 0.1);
-            /* 适配移动端滚动条滑块 */
-            border-radius: clamp(3px, 0.5vw, 5px);
-            border-width: clamp(0.5px, 0.1vw, 1px);
         }
         ::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(180deg, var(--accent-cyan), var(--accent-blue));
@@ -1055,13 +904,8 @@
             text-indent: 0 !important;
             width: 100%;
             display: block;
-            /* 适配移动端提示文字 */
-            font-size: clamp(14px, 3vw, 18px);
-            margin-bottom: clamp(15px, 3vw, 20px);
-            min-height: clamp(20px, 3vw, 24px);
         }
 
-        /* 九宫格容器样式 */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 120px);
@@ -1072,14 +916,8 @@
             justify-content: center;
             width: fit-content;
             height: fit-content;
-            /* 适配移动端九宫格 */
-            grid-template-columns: repeat(3, clamp(80px, 15vw, 120px));
-            grid-template-rows: repeat(3, clamp(106px, 20vw, 160px));
-            gap: clamp(5px, 1vw, 10px);
-            margin: clamp(15px, 3vw, 20px) auto;
         }
 
-        /* 图片格子样式 */
         .grid-item {
             width: 120px;
             height: 160px;
@@ -1095,14 +933,8 @@
             position: relative;
             z-index: 1;
             box-shadow: 0 0 10px var(--shadow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            /* 适配移动端格子大小 */
-            width: clamp(80px, 15vw, 120px);
-            height: clamp(106px, 20vw, 160px);
-            border-width: clamp(1px, 0.2vw, 2px);
-            border-radius: clamp(6px, 1vw, 8px);
         }
 
-        /* 图片样式 */
         .grid-item img {
             width: 100%;
             height: 100%;
@@ -1110,32 +942,26 @@
             object-position: center;
             transition: all 0.2s ease;
             border-radius: 6px;
-            /* 适配移动端图片圆角 */
-            border-radius: clamp(4px, 0.8vw, 6px);
         }
 
-        /* 隐藏图片后的样式 */
         .grid-item.hidden {
             opacity: 0;
             cursor: default;
             pointer-events: none;
         }
 
-        /* 正确点击的动画效果 */
         .grid-item.correct-click {
             border-color: var(--accent-cyan);
             box-shadow: 0 0 15px var(--shadow-cyan);
             transform: scale(0.95);
         }
 
-        /* 错误点击的动画效果 */
         .grid-item.wrong-click {
             border-color: var(--accent-pink);
             box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
             animation: shake 0.3s ease;
         }
 
-        /* 抖动动画关键帧 */
         @keyframes shake {
             0% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
@@ -1144,7 +970,6 @@
             100% { transform: translateX(0); }
         }
 
-        /* 最终文本显示样式 */
         .result-text {
             font-size: 1.25rem;
             line-height: 1.6;
@@ -1171,24 +996,16 @@
             text-align: justify;
             text-align-last: left;
             text-indent: 2em;
-            /* 适配移动端结果文本 */
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            line-height: clamp(1.4, 1vw, 1.6);
-            max-width: 100%;
-            padding: clamp(15px, 3vw, 20px);
-            border-radius: clamp(6px, 1vw, 8px);
-            border-width: clamp(0.5px, 0.1vw, 1px);
         }
 
-        /* 文本显示的类 */
         .result-text.show {
             opacity: 1;
             z-index: 2;
         }
 
-        /* ========== 移动端适配样式（优化版） ========== */
-        @media only screen and (max-width: 767px) {
-            /* 移除旋转，改为正常显示，解决滚动问题 */
+        /* ========== 移动端适配（核心修改） ========== */
+        @media only screen and (max-width: 1024px) {
+            /* 移除旋转，保持原始方向 */
             body {
                 transform: none !important;
                 width: 100% !important;
@@ -1196,124 +1013,193 @@
                 position: relative !important;
                 top: 0 !important;
                 left: 0 !important;
-                overflow-y: auto !important;
-                overflow-x: hidden !important;
+                overflow-x: auto; /* 允许水平滚动，保证左右布局 */
+                overflow-y: auto;
+                padding: 0 !important;
                 margin: 0 auto !important;
             }
 
             /* 加载页面适配 */
             #loading-screen {
-                width: 100% !important;
-                height: 100vh !important;
-                justify-content: center;
-                align-items: center;
-                position: fixed;
+                width: 100%;
+                max-width: 100%;
+                height: 100vh;
+                left: 0;
+                transform: none;
+                padding: 0 10px;
             }
 
-            /* 主容器适配 */
+            .echo-title {
+                font-size: clamp(2rem, 8vw, 4rem); /* 响应式字号 */
+                letter-spacing: 0.1em;
+            }
+
+            .singularity-log {
+                font-size: clamp(0.9rem, 3vw, 1.1rem);
+            }
+
+            /* 主容器保持左右布局，适配平板/手机横屏 */
             .crt-container {
-                grid-template-columns: 1fr !important; /* 单列布局 */
-                grid-template-rows: auto auto 1fr !important;
+                grid-template-columns: 220px 1fr; /* 缩小导航栏宽度 */
+                grid-template-rows: auto 1fr;
                 grid-template-areas:
-                    "header"
-                    "sidebar-left"
-                    "main" !important;
-                width: 100% !important;
-                min-height: 100vh !important;
-                padding: clamp(5px, 2vw, 10px) !important;
-                gap: clamp(5px, 2vw, 10px) !important;
-                margin: 0 auto !important;
-                display: none !important;
+                    "header header"
+                    "sidebar-left main";
+                width: 100%;
+                max-width: 100%;
+                padding: 8px;
+                gap: 8px;
+                margin: 0 auto;
+                overflow-x: hidden;
             }
 
             /* 头部适配 */
             .header {
-                padding: clamp(5px, 2vw, 10px) clamp(8px, 2vw, 15px) !important;
-                flex-direction: column !important; /* 垂直排列 */
-                justify-content: center !important;
-                align-items: center !important;
-                text-align: center !important;
+                padding: 12px 15px;
+                flex-wrap: nowrap; /* 不换行，保持一行 */
+                justify-content: space-between;
+                text-align: left;
             }
 
             .header h1 {
-                justify-content: center !important;
-                width: 100% !important;
-                margin-bottom: clamp(5px, 1vw, 10px) !important;
-                text-align: center !important;
+                font-size: clamp(1rem, 4vw, 1.5rem);
+                letter-spacing: 2px;
+                width: auto;
+                margin-bottom: 0;
             }
 
             .record-date {
-                justify-content: center !important;
-                width: 100% !important;
-                border-left: none !important;
-                padding-left: 0 !important;
-                text-align: center !important;
+                font-size: clamp(0.8rem, 2.5vw, 1rem);
+                padding-left: 15px;
+                width: auto;
+                border-left: 2px solid var(--accent-cyan);
             }
 
             /* 侧边栏适配 */
             .sidebar-left {
-                padding: clamp(5px, 2vw, 10px) !important;
+                padding: 12px;
+                gap: 10px;
+            }
+
+            .nav-top {
+                padding: 10px;
+                margin-bottom: 8px;
             }
 
             .nav-top h3 {
-                text-align: center !important;
+                font-size: clamp(0.9rem, 3vw, 1.1rem);
+                letter-spacing: 1px;
+            }
+
+            .nav-btn {
+                padding: 10px 12px;
+                font-size: clamp(0.85rem, 2.5vw, 1rem);
             }
 
             /* 主内容区适配 */
             .main-content-area {
-                padding: clamp(8px, 2vw, 15px) !important;
-                height: auto !important;
-                max-height: none !important;
-                overflow-y: auto !important;
+                padding: 15px;
+                height: auto;
+                max-height: none;
+                overflow-y: auto;
             }
 
             .section-title {
-                justify-content: flex-start !important;
-                text-align: left !important;
+                font-size: clamp(1.2rem, 4vw, 1.5rem);
+                margin-bottom: 15px;
+                justify-content: flex-start;
             }
 
-            /* 确保所有内容居中 */
-            .content-card, .img-row-container, .grid-container, 
-            .next-step-btn-container, .main-tab-nav {
-                margin-left: auto !important;
-                margin-right: auto !important;
-                text-align: center !important;
+            /* 卡片适配 */
+            .content-card {
+                padding: 15px;
+                max-width: 100%;
             }
 
-            /* 图片完全适配手机宽度 */
+            .card-title {
+                font-size: clamp(1rem, 3.5vw, 1.2rem);
+                justify-content: flex-start;
+            }
+
+            .card-content {
+                font-size: clamp(0.9rem, 3vw, 1.1rem);
+                line-height: 1.6;
+            }
+
+            /* 图片适配：完全响应式 */
             .reference-img {
-                max-width: 100% !important;
-                height: auto !important;
+                max-width: 100%;
+                height: auto;
+            }
+
+            .img-row-container {
+                gap: 8px;
             }
 
             .img-row-container .reference-img {
-                max-width: 48% !important;
-                min-width: 120px !important;
-            }
-
-            /* 按钮居中 */
-            .nav-btn, .main-tab-btn, .copy-btn, .next-step-btn {
-                margin-left: auto !important;
-                margin-right: auto !important;
-                text-align: center !important;
-            }
-
-            /* 文本适配 */
-            .card-content, .highlight-text, .analysis-text, .emphasis-text {
-                text-align: left !important;
-                text-align-last: left !important;
-                padding: 0 5px !important;
+                max-width: 48%;
+                min-width: 120px;
             }
 
             /* 九宫格适配 */
             .grid-container {
-                grid-template-columns: repeat(3, clamp(60px, 20vw, 80px)) !important;
-                grid-template-rows: repeat(3, clamp(80px, 25vw, 106px)) !important;
+                grid-template-columns: repeat(3, clamp(60px, 20vw, 100px));
+                grid-template-rows: repeat(3, clamp(80px, 26vw, 133px));
+                gap: 5px;
             }
 
             .grid-item {
-                width: clamp(60px, 20vw, 80px) !important;
-                height: clamp(80px, 25vw, 106px) !important;
+                width: 100%;
+                height: 100%;
+            }
+
+            /* 按钮适配 */
+            .next-step-btn {
+                padding: 10px 25px;
+                font-size: clamp(0.9rem, 3vw, 1.1rem);
+                letter-spacing: 2px;
+            }
+
+            /* 传播链适配 */
+            .chain-node {
+                font-size: clamp(0.85rem, 2.5vw, 1rem);
+                padding: 10px;
+                gap: 10px;
+            }
+
+            /* 文本样式适配 */
+            .highlight-text, .analysis-text {
+                font-size: clamp(0.9rem, 3vw, 1.1rem) !important;
+            }
+
+            .emphasis-text {
+                font-size: clamp(1rem, 3.2vw, 1.2rem) !important;
+            }
+        }
+
+        /* 小屏手机适配（补充） */
+        @media only screen and (max-width: 767px) {
+            .crt-container {
+                grid-template-columns: 180px 1fr; /* 进一步缩小导航栏 */
+            }
+
+            .header {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .header h1 {
+                width: 100%;
+                margin-bottom: 5px;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .record-date {
+                width: 100%;
+                justify-content: center;
+                border-left: none;
+                padding-left: 0;
             }
         }
     </style>
@@ -1417,7 +1303,7 @@
                     <div class="content-card">
                         <h3 class="card-title">复制框架</h3>
                         <div class="card-content">
-                            <div class="hint" id="hint">点击相同格式的图片，找出所有参考文献梗！</div>
+                            <div class="hint" id="hint"></div>
                             <div class="grid-container" id="gridContainer">
                                 <div class="result-text" id="resultText">
                                     “参考文献”梗标准化的复制框架，也降低了其传播门槛。网友只需保留“文献”的特定格式、替换具体主题，就能快速产生新的内容。
@@ -1456,18 +1342,15 @@
                 </div>
             </section>
 
-            <!-- 4. 分析总结模块 - 已完成字号增大和取消突出效果 -->
+            <!-- 4. 分析总结模块 -->
             <section id="analysis" class="content-section">
                 <h2 class="section-title">分析总结</h2>
                 <div class="content-card">
                     <div class="card-content">
                         <p class="analysis-text">“参考文献”梗的走红，核心在于学术格式与“抽象内容”结合产生的趣味性。当网友们将学术论文中代表权威、严谨的“参考文献”格式应用于日常琐碎、甚至无厘头的生活话题上，其形成的强烈认知反差使表达产生了颇具吸引力的幽默效果。面对难以认同的观点时，网友们可以通过“询问‘参考文献是什么？’”这种迂回的方式，巧妙地弱化表达的攻击性，从而避免因直接质疑而产生的尴尬或冲突。</p>
-                        <!-- ========== 关键修改：为这段文字添加no-highlight类，取消所有突出效果 ========== -->
                         <p class="analysis-text no-highlight">除此之外，“参考文献”梗标准化的复制框架，也降低了其传播门槛。网友只需保留“文献”的特定格式、替换具体主题，就能快速产生新的内容。从“得知是广东人，吃着白切鸡哭了整整一个下午”的地域身份认同，到“得知周末要加班，摸鱼摸了一上午”的职场调侃，标准化的格式使这一表达方式可批量化生产——当一个帖子被标注为“参考文献”后，会成为新内容的引用素材，而新的素材又会被后续网友当作新的“文献”应用于各类语境，形成不断更新迭代的传播链。</p>
                     </div>
                 </div>
-
-                <!-- ========== 新增：进入下一调查阶段按钮 ========== -->
                 <div class="next-step-btn-container">
                     <a href="https://www.你的链接.com" class="next-step-btn" target="_blank">进入下一调查阶段</a>
                 </div>
@@ -1475,22 +1358,19 @@
         </main>
     </div>
 
-    <!-- 复制成功提示 -->
     <div class="copy-toast" id="copyToast">复制成功</div>
 
-    <!-- JavaScript逻辑 -->
     <script>
         // ========== 加载动画逻辑 ==========
         const initializeBtn = document.getElementById('initializeBtn');
         const loadingScreen = document.getElementById('loading-screen');
         const mainContent = document.querySelector('.crt-container');
 
-        // 点击初始化按钮隐藏加载动画，显示主内容
         initializeBtn.addEventListener('click', () => {
             loadingScreen.style.opacity = '0';
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
-                mainContent.style.display = 'grid'; // 显示主内容
+                mainContent.style.display = 'grid';
             }, 800);
         });
 
@@ -1500,40 +1380,28 @@
 
         navBtns.forEach(btn => {
             btn.addEventListener('click', function() {
-                // 移除所有active类
                 navBtns.forEach(b => b.classList.remove('active'));
                 contentSections.forEach(section => section.classList.remove('active'));
-
-                // 给当前按钮添加active类
                 this.classList.add('active');
-                // 显示对应内容区域
                 const targetId = this.getAttribute('data-target');
                 document.getElementById(targetId).classList.add('active');
             });
         });
 
-        // ========== 修复后的主内容区标签切换逻辑 ==========
+        // 主内容区标签切换逻辑
         const mainTabBtns = document.querySelectorAll('.main-tab-btn');
 
         mainTabBtns.forEach(btn => {
             btn.addEventListener('click', function() {
-                // 1. 找到当前按钮所在的父级导航容器
                 const parentNav = this.closest('.main-tab-nav');
-                // 2. 只操作当前导航容器内的兄弟按钮
                 const siblingBtns = parentNav.querySelectorAll('.main-tab-btn');
-
-                // 3. 移除当前导航组内所有按钮的active类
                 siblingBtns.forEach(b => b.classList.remove('active'));
-                // 4. 给当前点击的按钮添加active类
                 this.classList.add('active');
 
-                // 5. 找到当前按钮所在的内容区域（section）
                 const targetSection = parentNav.closest('.content-section');
-                // 6. 只操作当前section内的内容块，而不是全局
                 const targetBlockId = this.getAttribute('data-block');
                 const sectionBlocks = targetSection.querySelectorAll('.content-block');
 
-                // 7. 只切换当前section内的内容块显示状态
                 sectionBlocks.forEach(block => {
                     if (block.id === targetBlockId) {
                         block.classList.add('active');
@@ -1547,26 +1415,24 @@
         // 复制框架函数
         function copyFrame() {
             const frameText = document.getElementById('frameText');
-            frameText.select();
-            document.execCommand('copy');
-
-            // 显示复制成功提示
-            const copyToast = document.getElementById('copyToast');
-            copyToast.classList.add('show');
-            setTimeout(() => {
-                copyToast.classList.remove('show');
-            }, 2000);
+            if (frameText) {
+                frameText.select();
+                document.execCommand('copy');
+                const copyToast = document.getElementById('copyToast');
+                copyToast.classList.add('show');
+                setTimeout(() => {
+                    copyToast.classList.remove('show');
+                }, 2000);
+            }
         }
 
         // ========== 九宫格游戏逻辑 ==========
-        // 定义三组图片（数字对应九宫格的位置，从1开始）
         const correctGroups = [
-            [1, 3, 7, 8],   // 第一组
-            [2, 5, 6],      // 第二组
-            [4, 9]          // 第三组
+            [1, 3, 7, 8],
+            [2, 5, 6],
+            [4, 9]
         ];
 
-        // 定义自定义图片映射（key是图片位置1-9，value是图片URL）
         const customImages = {
             1: 'https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/4ce8356bcad343f3acfe0e07d9c1996c.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012104394990B73B48376B6026F5DF&rrcfp=8a172a1a&x-expires=1769546389&x-signature=EOlT8q9UaszkbaVP5CUNylfBsrY%3D',
             2: 'https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/c7e1d5b933574a2b8f54b023ac004c2a.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012104454506D59E97744FE525DE54&rrcfp=8a172a1a&x-expires=1769546745&x-signature=cJnZFVO5eFpwIAzYlu8ykiWKgX0%3D',
