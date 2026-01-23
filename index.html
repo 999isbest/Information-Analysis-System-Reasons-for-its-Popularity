@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 关键修改：添加viewport设置确保移动端适配 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>信息分析系统</title>
     <style>
         /* 重置样式 */
@@ -19,6 +20,7 @@
             min-height: 100vh;
             position: relative;
             overflow: auto; /* 确保页面可以正常滚动 */
+            transition: all 0.3s ease; /* 添加旋转过渡动画 */
         }
 
         body::before {
@@ -899,117 +901,6 @@
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan), var(--accent-purple));
         }
 
-        /* 响应式适配 */
-        @media (max-width: 1200px) {
-            .crt-container {
-                grid-template-columns: 260px 1fr;
-            }
-            .header h1 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .crt-container {
-                grid-template-columns: 220px 1fr;
-            }
-            .main-content-area {
-                padding: 25px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .crt-container {
-                grid-template-columns: 1fr;
-                grid-template-areas:
-                    "header"
-                    "sidebar-left"
-                    "main";
-            }
-            .header {
-                flex-direction: column;
-                gap: 15px;
-                /* 取消居中，改为两端对齐 */
-                text-align: justify;
-                padding: 15px 20px;
-                align-items: flex-start;
-            }
-            .header h1 {
-                justify-content: flex-start;
-                font-size: 1.8rem;
-                width: 100%;
-            }
-            .record-date {
-                border-left: none;
-                padding-left: 0;
-                margin-top: 10px;
-                justify-content: flex-start;
-                width: 100%;
-            }
-            .main-content-area {
-                padding: 20px;
-            }
-            /* 移动端进一步缩小图片 */
-            .reference-img {
-                max-width: 300px;
-            }
-            /* 移动端调整强调文字大小 */
-            .emphasis-text {
-                font-size: 1.2rem !important;
-            }
-            /* 移动端调整分析总结文字大小 */
-            .analysis-text {
-                font-size: 1.15rem !important;
-            }
-            /* 移动端图片堆叠显示 */
-            .img-row-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .img-row-container .reference-img {
-                max-width: 300px;
-                margin: 0 auto;
-            }
-            /* 移动端九宫格下方标注字号调整，保留居中 */
-            .grid-caption {
-                font-size: 0.8rem;
-                text-align: center !important;
-                text-align-last: center !important;
-            }
-            /* 移动端图片标注居中 */
-            .img-caption {
-                text-align: center !important;
-                text-align-last: center !important;
-            }
-            /* 移动端卡片宽度自适应 */
-            .content-card {
-                max-width: 100%;
-            }
-            /* 移动端导航顶部标题 */
-            .nav-top h3 {
-                text-align: justify;
-            }
-            /* 移动端提示文本居中 */
-            .hint {
-                text-align: center !important;
-                text-align-last: center !important;
-            }
-            /* 移动端下一步按钮适配 */
-            .next-step-btn {
-                padding: 15px 30px;
-                font-size: 1.1rem;
-                letter-spacing: 2px;
-            }
-
-            /* 移动端加载动画适配 */
-            .echo-title {
-                font-size: 4rem;
-            }
-            .loading-log, .progress-container {
-                width: 300px;
-            }
-        }
-
         /* 滚动条美化 */
         ::-webkit-scrollbar {
             width: 10px;
@@ -1153,31 +1044,144 @@
             text-indent: 2em;
         }
 
-        /* 移动端适配九宫格 */
-        @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: repeat(3, 100px);
-                grid-template-rows: repeat(3, 133px);
-            }
-            .grid-item {
-                width: 100px;
-                height: 133px;
-            }
-            .result-text {
-                font-size: 1.15rem; /* 移动端适配字号 */
-                padding: 15px;
-                /* 移动端保持两端对齐 */
-                text-align: justify;
-                text-align-last: left;
-                /* 段首空两格 */
-                text-indent: 2em;
-            }
-        }
-
         /* 新增：文本显示的类 */
         .result-text.show {
             opacity: 1;
             z-index: 2; /* 显示时层级高于隐藏的图片 */
+        }
+
+        /* ========== 核心新增：手机端旋转90度适配样式 ========== */
+        @media only screen and (max-width: 767px) {
+            /* 旋转整个页面 */
+            body {
+                transform: rotate(90deg);
+                transform-origin: center center;
+                width: 100vh;
+                height: 100vw;
+                position: fixed;
+                top: 0;
+                left: 0;
+                overflow-x: hidden;
+            }
+
+            /* 适配加载页面 */
+            #loading-screen {
+                width: 100vh;
+                height: 100vw;
+            }
+
+            .echo-title {
+                font-size: 3rem; /* 缩小手机端标题字号 */
+            }
+
+            .loading-log {
+                width: 80%; /* 适配手机宽度 */
+            }
+
+            .progress-container {
+                width: 80%; /* 适配手机宽度 */
+            }
+
+            /* 适配主内容容器 */
+            .crt-container {
+                grid-template-columns: 1fr; /* 手机端改为单列布局 */
+                grid-template-rows: auto auto 1fr;
+                grid-template-areas:
+                    "header"
+                    "sidebar-left"
+                    "main";
+                width: 100%;
+                height: 100%;
+                padding: 10px;
+                gap: 10px;
+            }
+
+            /* 适配头部 */
+            .header {
+                padding: 10px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.2rem;
+                letter-spacing: 2px;
+            }
+
+            .record-date {
+                font-size: 0.9rem;
+                padding-left: 10px;
+            }
+
+            /* 适配侧边栏 */
+            .sidebar-left {
+                padding: 10px;
+            }
+
+            .nav-top h3 {
+                font-size: 1rem;
+            }
+
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            /* 适配主内容区 */
+            .main-content-area {
+                padding: 15px;
+                height: calc(100% - 20px);
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+            }
+
+            /* 适配卡片 */
+            .content-card {
+                padding: 15px;
+                max-width: 100%;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+            }
+
+            .card-content {
+                font-size: 1rem;
+            }
+
+            /* 适配图片 */
+            .reference-img {
+                max-width: 100%;
+            }
+
+            .img-row-container {
+                gap: 10px;
+            }
+
+            .img-row-container .reference-img {
+                max-width: 45%;
+                min-width: 150px;
+            }
+
+            /* 适配九宫格 */
+            .grid-container {
+                grid-template-columns: repeat(3, 80px);
+                grid-template-rows: repeat(3, 106px);
+                gap: 5px;
+            }
+
+            .grid-item {
+                width: 80px;
+                height: 106px;
+            }
+
+            /* 适配按钮 */
+            .next-step-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+                letter-spacing: 2px;
+            }
         }
     </style>
 </head>
@@ -1350,7 +1354,7 @@
 
                 <!-- ========== 新增：进入下一调查阶段按钮 ========== -->
                 <div class="next-step-btn-container">
-                    <button class="next-step-btn" id="nextStepBtn">进入下一调查阶段</button>
+                    <a href="https://www.你的链接.com" class="next-step-btn" target="_blank">进入下一调查阶段</a>
                 </div>
             </section>
         </main>
@@ -1451,7 +1455,7 @@
         const customImages = {
             1: 'https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/4ce8356bcad343f3acfe0e07d9c1996c.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012104394990B73B48376B6026F5DF&rrcfp=8a172a1a&x-expires=1769546389&x-signature=EOlT8q9UaszkbaVP5CUNylfBsrY%3D',
             2: 'https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/c7e1d5b933574a2b8f54b023ac004c2a.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012104454506D59E97744FE525DE54&rrcfp=8a172a1a&x-expires=1769546745&x-signature=cJnZFVO5eFpwIAzYlu8ykiWKgX0%3D',
-3: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/f48c577b485c41e5a95e6784b6ca8b24.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260121044057AF577B9C65D016263FBB&rrcfp=8a172a1a&x-expires=1769546457&x-signature=FkAjxYwkAtU94Wx3r80cp0UNIzU%3D',
+            3: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/f48c577b485c41e5a95e6784b6ca8b24.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260121044057AF577B9C65D016263FBB&rrcfp=8a172a1a&x-expires=1769546457&x-signature=FkAjxYwkAtU94Wx3r80cp0UNIzU%3D',
             4: 'https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/ed64fa36be194fcc8cd82fd5d55a93ad.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=202601210446200D151879E7E4E8167B09&rrcfp=8a172a1a&x-expires=1769546780&x-signature=wmRW04hyu6YfJ%2FuFcx85UczryW4%3D',
             5: 'https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/4c8f5afbc401490ab5f8f66271e452ae.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012104454506D59E97744FE525DE54&rrcfp=8a172a1a&x-expires=1769546745&x-signature=7W%2FfZlngFfOLi62WPbaiFG1CDU0%3D',
             6:'https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/19daea4835bd47b6995d95c22bd6879e.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012104454506D59E97744FE525DE54&rrcfp=8a172a1a&x-expires=1769546745&x-signature=f3FTLrEgFuu9vU1uZpIE6Vm7H0w%3D',
@@ -1631,4 +1635,4 @@
         initGrid();
     </script>
 </body>
-</html>
+      </html>
