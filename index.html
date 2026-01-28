@@ -1030,155 +1030,167 @@
             box-shadow: 0 0 10px var(--shadow-cyan);
         }
 
-        /* ========== 九宫格游戏样式（适配科技风） ========== */
-        /* 提示信息样式 - 核心修改：改为居中显示 */
-        .hint {
-            font-size: 18px;
-            color: var(--new-accent-cyan);
-            margin-bottom: 20px;
-            min-height: 24px;
-            /* 核心修改：改为水平居中 */
-            text-align: center !important;
-            text-align-last: center !important;
-            text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
-            /* 取消段首缩进 */
-            text-indent: 0 !important;
-            /* 确保宽度100%，居中生效 */
-            width: 100%;
-            display: block;
-        }
+       /* ========== 九宫格游戏样式（适配科技风） ========== */
+/* 提示信息样式 - 核心修改：改为居中显示 */
+.hint {
+    font-size: 18px;
+    color: var(--new-accent-cyan);
+    margin-bottom: 20px;
+    min-height: 24px;
+    /* 核心修改：改为水平居中 */
+    text-align: center !important;
+    text-align-last: center !important;
+    text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+    /* 取消段首缩进 */
+    text-indent: 0 !important;
+    /* 确保宽度100%，居中生效 */
+    width: 100%;
+    display: block;
+}
 
-        /* 九宫格容器样式 - 改为相对定位，用于承载结果文本 */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 120px); /* 列宽按3:4比例的宽设定 */
-            grid-template-rows: repeat(3, 160px);    /* 行高=宽*4/3=120*4/3=160px，保证3:4比例 */
-            gap: 10px;
-            margin: 20px auto;
-            position: relative; /* 新增：作为结果文本的父容器 */
-            justify-content: center;
-            /* ========== 关键修改：确保容器有足够空间让内容居中 ========== */
-            width: fit-content;
-            height: fit-content;
-        }
+/* 九宫格容器样式 - 改为相对定位，用于承载结果文本 */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 120px); /* 列宽按3:4比例的宽设定 */
+    grid-template-rows: repeat(3, 160px);    /* 行高=宽*4/3=120*4/3=160px，保证3:4比例 */
+    gap: 10px;
+    margin: 20px auto;
+    position: relative; /* 新增：作为结果文本的父容器 */
+    justify-content: center;
+    /* ========== 关键修改：确保容器有足够空间让内容居中 ========== */
+    width: fit-content;
+    height: fit-content;
+}
 
-        /* 图片格子样式 - 固定3:4比例（适配科技风） */
-        .grid-item {
-            width: 120px;       /* 宽：120px */
-            height: 160px;      /* 高：160px（120*4/3），严格3:4比例 */
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
-            border: 2px solid var(--accent-blue);
-            border-radius: 8px;
-            overflow: hidden;
-           cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative; /* 辅助图片定位 */
-            z-index: 1; /* 确保图片在文本上方 */
-            box-shadow: 0 0 10px var(--shadow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
+/* 图片格子样式 - 固定3:4比例（适配科技风） */
+.grid-item {
+    width: 120px;       /* 宽：120px */
+    height: 160px;      /* 高：160px（120*4/3），严格3:4比例 */
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+    border: 2px solid var(--accent-blue);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* 辅助图片定位 */
+    z-index: 1; /* 确保图片在文本上方 */
+    box-shadow: 0 0 10px var(--shadow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
 
-        /* 图片样式 - 按3:4比例适配，不拉伸变形 */
-        .grid-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;  /* 保持图片比例，裁剪多余部分，不拉伸 */
-            object-position: center; /* 居中显示图片核心内容 */
-            transition: all 0.2s ease;
-            border-radius: 6px;
-        }
+/* 图片样式 - 按3:4比例适配，不拉伸变形 */
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* 保持图片比例，裁剪多余部分，不拉伸 */
+    object-position: center; /* 居中显示图片核心内容 */
+    transition: all 0.2s ease;
+    border-radius: 6px;
+}
 
-        /* 隐藏图片后的样式 */
-        .grid-item.hidden {
-            opacity: 0;
-            cursor: default;
-            pointer-events: none; /* 防止点击已隐藏的元素 */
-        }
+/* 隐藏图片后的样式 */
+.grid-item.hidden {
+    opacity: 0;
+    cursor: default;
+    pointer-events: none; /* 防止点击已隐藏的元素 */
+}
 
-        /* 正确点击的动画效果（科技风适配） */
-        .grid-item.correct-click {
-            border-color: var(--accent-cyan); /* 青色边框标识正确 */
-            box-shadow: 0 0 15px var(--shadow-cyan);
-            transform: scale(0.95); /* 轻微缩小效果 */
-        }
+/* 正确点击的动画效果（科技风适配） */
+.grid-item.correct-click {
+    border-color: var(--accent-cyan); /* 青色边框标识正确 */
+    box-shadow: 0 0 15px var(--shadow-cyan);
+    transform: scale(0.95); /* 轻微缩小效果 */
+}
 
-        /* 错误点击的动画效果（科技风适配） */
-        .grid-item.wrong-click {
-            border-color: var(--accent-pink); /* 粉色边框标识错误 */
-            box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
-            animation: shake 0.3s ease; /* 抖动动画 */
-        }
+/* 错误点击的动画效果（科技风适配） */
+.grid-item.wrong-click {
+    border-color: var(--accent-pink); /* 粉色边框标识错误 */
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+    animation: shake 0.3s ease; /* 抖动动画 */
+}
 
-        /* 抖动动画关键帧 */
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
+/* 抖动动画关键帧 */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
 
-        /* 最终文本显示样式 - 科技风适配 */
-        .result-text {
-            font-size: 1.25rem; /* 修改：字号改为1.25rem */
-            line-height: 1.6;
-            color: var(--text-light);
-            max-width: 600px;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
-            border: 1px solid var(--accent-purple);
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3), 0 0 15px var(--shadow-purple);
-            /* 核心修改：绝对定位覆盖九宫格区域 */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            box-sizing: border-box;
-            /* 透明度初始为0，通过类控制显示 */
-            opacity: 0;
-            transition: opacity 0.8s ease; /* 平滑的透明度过渡 */
-            z-index: 0; /* 确保文本在图片下方，图片消失后显示 */
-            /* 关键修改：结果文本两端对齐，取消居中 */
-            text-align: justify;
-            text-align-last: left;
-            /* 段首空两格 */
-            text-indent: 2em;
-        }
+/* 最终文本显示样式 - 科技风适配 */
+.result-text {
+    font-size: 1.25rem; /* 修改：字号改为1.25rem */
+    line-height: 1.6;
+    color: var(--text-light);
+    max-width: 600px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
+    border: 1px solid var(--accent-purple);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3), 0 0 15px var(--shadow-purple);
+    /* 核心修改：绝对定位覆盖九宫格区域 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    /* 透明度初始为0，通过类控制显示 */
+    opacity: 0;
+    transition: opacity 0.8s ease; /* 平滑的透明度过渡 */
+    z-index: 0; /* 确保文本在图片下方，图片消失后显示 */
+    /* 关键修改：结果文本两端对齐，取消居中 */
+    text-align: justify;
+    text-align-last: left;
+    /* 段首空两格 */
+    text-indent: 2em;
+}
 
-        /* 移动端适配九宫格 */
-        @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: repeat(3, 100px);
-                grid-template-rows: repeat(3, 133px);
-            }
-            .grid-item {
-                width: 100px;
-                height: 133px;
-            }
-            .result-text {
-                font-size: 1.15rem; /* 移动端适配字号 */
-                padding: 15px;
-                /* 移动端保持两端对齐 */
-                text-align: justify;
-                text-align-last: left;
-                /* 段首空两格 */
-                text-indent: 2em;
-            }
-        }
+/* 移动端适配九宫格 - 核心新增：水平滚动条 */
+@media (max-width: 768px) {
+    /* 为页面主体/九宫格父容器添加水平滚动 */
+    body {
+        overflow-x: auto; /* 开启水平滚动 */
+        -webkit-overflow-scrolling: touch; /* 优化iOS滚动体验 */
+    }
+    /* 也可以给九宫格的直接父容器加（推荐，更精准） */
+    .grid-wrapper { /* 需在HTML中给九宫格套一个class="grid-wrapper"的div */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 10px; /* 增加左右内边距，避免内容贴边 */
+    }
+    .grid-container {
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 133px);
+        min-width: 320px; /* 设定最小宽度，确保触发滚动（可根据需求调整） */
+    }
+    .grid-item {
+        width: 100px;
+        height: 133px;
+    }
+    .result-text {
+        font-size: 1.15rem; /* 移动端适配字号 */
+        padding: 15px;
+        /* 移动端保持两端对齐 */
+        text-align: justify;
+        text-align-last: left;
+        /* 段首空两格 */
+        text-indent: 2em;
+    }
+}
 
-        /* 新增：文本显示的类 */
-        .result-text.show {
-            opacity: 1;
-            z-index: 2; /* 显示时层级高于隐藏的图片 */
-        }
+/* 新增：文本显示的类 */
+.result-text.show {
+    opacity: 1;
+    z-index: 2; /* 显示时层级高于隐藏的图片 */
+}
     </style>
 </head>
 <body>
@@ -1456,7 +1468,7 @@
     8: 'https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/4f513295787c443a8f643238dfe31c7a.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012823322566C22AAE94B17525C8F4&rrcfp=8a172a1a&x-expires=1770219145&x-signature=dSPR7sLXen%2FKYtDcKbV9Swdu%2Bh8%3D',
     9: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/7ef04f8ea06342098809413bc3512d9e.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260128233408792EE702CA3F76235499&rrcfp=8a172a1a&x-expires=1770219248&x-signature=4IkhaqEjKM5J0HJTduYkCI9H3YI%3D'
 };
-     
+
         // 重构状态管理：为每组维护独立的已点击项和完成状态
         let groupStates = [
             { clicked: new Set(), completed: false }, // 第一组状态
@@ -1629,7 +1641,3 @@
     </script>
 </body>
 </html>
-
-
-
-
