@@ -1153,27 +1153,31 @@
     text-indent: 2em;
 }
 
-/* 移动端适配九宫格 - 核心新增：水平滚动条 */
+/* 移动端适配九宫格 - 核心修改：直接给九宫格容器加滚动条 */
 @media (max-width: 768px) {
-    /* 为页面主体/九宫格父容器添加水平滚动 */
-    body {
-        overflow-x: auto; /* 开启水平滚动 */
-        -webkit-overflow-scrolling: touch; /* 优化iOS滚动体验 */
-    }
-    /* 也可以给九宫格的直接父容器加（推荐，更精准） */
-    .grid-wrapper { /* 需在HTML中给九宫格套一个class="grid-wrapper"的div */
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding: 0 10px; /* 增加左右内边距，避免内容贴边 */
-    }
+    /* 移除body的滚动（不再需要） */
+    /* 直接给九宫格容器添加水平滚动 */
     .grid-container {
         grid-template-columns: repeat(3, 100px);
         grid-template-rows: repeat(3, 133px);
-        min-width: 320px; /* 设定最小宽度，确保触发滚动（可根据需求调整） */
+        /* 核心新增：开启水平滚动 */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* 优化iOS滚动体验 */
+        /* 关键：设置容器宽度为100%，内容超出时触发滚动 */
+        width: 100%;
+        /* 取消原有fit-content，改为100%适配屏幕宽度 */
+        max-width: 100%;
+        /* 优化滚动体验：增加内边距，避免内容贴边 */
+        padding: 0 5px;
+        box-sizing: border-box;
+        /* 保留相对定位，不影响result-text的绝对定位 */
+        position: relative;
     }
     .grid-item {
         width: 100px;
         height: 133px;
+        /* 确保格子尺寸不受容器滚动影响 */
+        flex-shrink: 0;
     }
     .result-text {
         font-size: 1.15rem; /* 移动端适配字号 */
@@ -1183,9 +1187,9 @@
         text-align-last: left;
         /* 段首空两格 */
         text-indent: 2em;
+        /* 适配滚动后的容器，文本宽度跟随容器 */
+        max-width: 100%;
     }
-}
-
 /* 新增：文本显示的类 */
 .result-text.show {
     opacity: 1;
