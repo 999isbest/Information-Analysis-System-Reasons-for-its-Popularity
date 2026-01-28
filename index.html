@@ -1070,7 +1070,7 @@
             border: 2px solid var(--accent-blue);
             border-radius: 8px;
             overflow: hidden;
-            cursor: pointer;
+           cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -1446,15 +1446,18 @@
 
         // 定义自定义图片映射（key是图片位置1-9，value是图片URL）
         const customImages = {
-            1: 'https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/4ce8356bcad343f3acfe0e07d9c1996c.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012104394990B73B48376B6026F5DF&rrcfp=8a172a1a&x-expires=1769546389&x-signature=EOlT8q9UaszkbaVP5CUNylfBsrY%3D',
-            2: 'https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/c7e1d5b933574a2b8f54b023ac004c2a.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012104454506D59E97744FE525DE54&rrcfp=8a172a1a&x-expires=1769546745&x-signature=cJnZFVO5eFpwIAzYlu8ykiWKgX0%3D',
-            3: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/f48c577b485c41e5a95e6784b6ca8b24.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260121044057AF577B9C65D016263FBB&rrcfp=8a172a1a&x-expires=1769546457&x-signature=FkAjxYwkAtU94Wx3r80cp0UNIzU%3D',
-4: 'https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/ed64fa36be194fcc8cd82fd5d55a93ad.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=202601210446200D151879E7E4E8167B09&rrcfp=8a172a1a&x-expires=1769546780&x-signature=wmRW04hyu6YfJ%2FuFcx85UczryW4%3D',
-            5: 'https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/4c8f5afbc401490ab5f8f66271e452ae.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012104454506D59E97744FE525DE54&rrcfp=8a172a1a&x-expires=1769546745&x-signature=7W%2FfZlngFfOLi62WPbaiFG1CDU0%3D',
-            6:'https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/19daea4835bd47b6995d95c22bd6879e.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012104454506D59E97744FE525DE54&rrcfp=8a172a1a&x-expires=1769546745&x-signature=f3FTLrEgFuu9vU1uZpIE6Vm7H0w%3D',
-            7: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/fa0d9b05b562484b9c7a93c4131aad7b.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260121044439B1BDB876242F11260F1F&rrcfp=8a172a1a&x-expires=1769546679&x-signature=IZGdke%2F44J0ne5NxUYlE9Hk5c9g%3D',
-            8: 'https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/8889904b3092435e96e5d8eaeb566fb3.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260121044439B1BDB876242F11260F1F&rrcfp=8a172a1a&x-expires=1769546679&x-signature=E3Ya%2BCPWLugS9zMf93JgFlu%2F%2Fzk%3D',
-            9: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/472b8ab443414c85a11be421e580d0ac.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=202601210446200D151879E7E4E8167B09&rrcfp=8a172a1a&x-expires=1769546780&x-signature=4E5gnB27UFP5DeLHTKxmomeKTVs%3D'
+            // 定义自定义图片映射（key是图片位置1-9，value是图片URL）
+const customImages = {
+    1: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/cfcb34cdb1244ae98ffbe435c92e33fb.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012823322566C22AAE94B17525C8F4&rrcfp=8a172a1a&x-expires=1770219145&x-signature=HyRZ%2B36unZZDfA3R7PyCG%2BvN9Do%3D',
+    2: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/6c0763bb565e418eb16ba9a90ac883dd.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260128233314792EE702CA3F76235376&rrcfp=8a172a1a&x-expires=1770219195&x-signature=bf5KgOT%2FSgmCbhTZYqeHjpsxSak%3D',
+    3: 'https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/abed292b965b4d628adf638f9fce80fd.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012823322566C22AAE94B17525C8F4&rrcfp=8a172a1a&x-expires=1770219145&x-signature=%2B%2BVVGmRJwjeXGTOy1VmqbMlt8BU%3D',
+    4: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/4d6e37eb40f64797a83f9b5ed83b031d.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260128233408792EE702CA3F76235499&rrcfp=8a172a1a&x-expires=1770219248&x-signature=itKTi9uz6VVtFRIC8if%2BqQ4guGg%3D',
+    5: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/8dc6ee8edb454295ad36f43806b28100.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260128233314792EE702CA3F76235376&rrcfp=8a172a1a&x-expires=1770219195&x-signature=%2BBhN2ZHixXDz%2FNJI5Ellbl9oYfE%3D',
+    6: 'https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/9ea688cc18c143c4976df590ccaf99c9.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260128233314792EE702CA3F76235376&rrcfp=8a172a1a&x-expires=1770219195&x-signature=dU%2F26FOTlZWHEYTPiikxOp3%2BmrA%3D',
+    7: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/1af878fa83354374bac707dd0c687c80.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012823322566C22AAE94B17525C8F4&rrcfp=8a172a1a&x-expires=1770219145&x-signature=LswfzKGMZ0oM5yna2B89hgkCjh8%3D',
+    8: 'https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/4f513295787c443a8f643238dfe31c7a.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=2026012823322566C22AAE94B17525C8F4&rrcfp=8a172a1a&x-expires=1770219145&x-signature=dSPR7sLXen%2FKYtDcKbV9Swdu%2Bh8%3D',
+    9: 'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/7ef04f8ea06342098809413bc3512d9e.jpg~tplv-a9rns2rl98-24:720:720.image?lk3s=8e244e95&rcl=20260128233408792EE702CA3F76235499&rrcfp=8a172a1a&x-expires=1770219248&x-signature=4IkhaqEjKM5J0HJTduYkCI9H3YI%3D'
+};
         };
 
         // 重构状态管理：为每组维护独立的已点击项和完成状态
