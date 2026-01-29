@@ -1030,171 +1030,169 @@
             box-shadow: 0 0 10px var(--shadow-cyan);
         }
 
-       /* ========== 九宫格游戏样式（适配科技风） ========== */
-/* 提示信息样式 - 核心修改：改为居中显示 */
-.hint {
-    font-size: 18px;
-    color: var(--new-accent-cyan);
-    margin-bottom: 20px;
-    min-height: 24px;
-    /* 核心修改：改为水平居中 */
-    text-align: center !important;
-    text-align-last: center !important;
-    text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
-    /* 取消段首缩进 */
-    text-indent: 0 !important;
-    /* 确保宽度100%，居中生效 */
-    width: 100%;
-    display: block;
-}
+        /* ========== 九宫格游戏样式（适配科技风） - 完整修复版 ========== */
+        /* 提示信息样式 - 核心修改：改为居中显示 */
+        .hint {
+            font-size: 18px;
+            color: var(--new-accent-cyan);
+            margin-bottom: 20px;
+            min-height: 24px;
+            /* 核心修改：改为水平居中 */
+            text-align: center !important;
+            text-align-last: center !important;
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+            /* 取消段首缩进 */
+            text-indent: 0 !important;
+            /* 确保宽度100%，居中生效 */
+            width: 100%;
+            display: block;
+        }
 
-/* 九宫格容器样式 - 改为相对定位，用于承载结果文本 */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 120px); /* 列宽按3:4比例的宽设定 */
-    grid-template-rows: repeat(3, 160px);    /* 行高=宽*4/3=120*4/3=160px，保证3:4比例 */
-    gap: 10px;
-    margin: 20px auto;
-    position: relative; /* 新增：作为结果文本的父容器 */
-    justify-content: center;
-    /* ========== 关键修改：确保容器有足够空间让内容居中 ========== */
-    width: fit-content;
-    height: fit-content;
-}
+        /* 新增：九宫格滚动容器（关键，解决左侧内容无法显示问题） */
+        .grid-wrapper {
+            overflow-x: auto; /* 开启水平滚动 */
+            -webkit-overflow-scrolling: touch; /* 优化iOS滚动体验，更顺滑 */
+            padding: 0 10px; /* 增加左右内边距，避免内容贴边 */
+            margin: 0 auto; /* 居中容器 */
+            max-width: 100%; /* 不超过父容器宽度 */
+        }
 
-/* 图片格子样式 - 固定3:4比例（适配科技风） */
-.grid-item {
-    width: 120px;       /* 宽：120px */
-    height: 160px;      /* 高：160px（120*4/3），严格3:4比例 */
-    background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
-    border: 2px solid var(--accent-blue);
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative; /* 辅助图片定位 */
-    z-index: 1; /* 确保图片在文本上方 */
-    box-shadow: 0 0 10px var(--shadow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
+        /* 九宫格容器样式 - 改为相对定位，用于承载结果文本 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 120px); /* 列宽按3:4比例的宽设定 */
+            grid-template-rows: repeat(3, 160px);    /* 行高=宽*4/3=120*4/3=160px，保证3:4比例 */
+            gap: 10px;
+            margin: 20px auto;
+            position: relative; /* 新增：作为结果文本的父容器 */
+            justify-content: center;
+            /* 关键修改：设置最小宽度，确保九宫格完整展示，触发水平滚动 */
+            min-width: 380px; /* 3*120px + 2*10px（间距）= 380px，刚好容纳九宫格 */
+            width: fit-content; /* 宽度贴合内容，不拉伸 */
+            height: fit-content; /* 高度贴合内容，不拉伸 */
+        }
 
-/* 图片样式 - 按3:4比例适配，不拉伸变形 */
-.grid-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;  /* 保持图片比例，裁剪多余部分，不拉伸 */
-    object-position: center; /* 居中显示图片核心内容 */
-    transition: all 0.2s ease;
-    border-radius: 6px;
-}
+        /* 图片格子样式 - 固定3:4比例（适配科技风） */
+        .grid-item {
+            width: 120px;       /* 宽：120px */
+            height: 160px;      /* 高：160px（120*4/3），严格3:4比例 */
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            border: 2px solid var(--accent-blue);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative; /* 辅助图片定位 */
+            z-index: 1; /* 确保图片在文本上方 */
+            box-shadow: 0 0 10px var(--shadow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
 
-/* 隐藏图片后的样式 */
-.grid-item.hidden {
-    opacity: 0;
-    cursor: default;
-    pointer-events: none; /* 防止点击已隐藏的元素 */
-}
+        /* 图片样式 - 按3:4比例适配，不拉伸变形 */
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;  /* 保持图片比例，裁剪多余部分，不拉伸 */
+            object-position: center; /* 居中显示图片核心内容 */
+            transition: all 0.2s ease;
+            border-radius: 6px;
+        }
 
-/* 正确点击的动画效果（科技风适配） */
-.grid-item.correct-click {
-    border-color: var(--accent-cyan); /* 青色边框标识正确 */
-    box-shadow: 0 0 15px var(--shadow-cyan);
-    transform: scale(0.95); /* 轻微缩小效果 */
-}
+        /* 隐藏图片后的样式 */
+        .grid-item.hidden {
+            opacity: 0;
+            cursor: default;
+            pointer-events: none; /* 防止点击已隐藏的元素 */
+        }
 
-/* 错误点击的动画效果（科技风适配） */
-.grid-item.wrong-click {
-    border-color: var(--accent-pink); /* 粉色边框标识错误 */
-    box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
-    animation: shake 0.3s ease; /* 抖动动画 */
-}
+        /* 正确点击的动画效果（科技风适配） */
+        .grid-item.correct-click {
+            border-color: var(--accent-cyan); /* 青色边框标识正确 */
+            box-shadow: 0 0 15px var(--shadow-cyan);
+            transform: scale(0.95); /* 轻微缩小效果 */
+        }
 
-/* 抖动动画关键帧 */
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
-}
+        /* 错误点击的动画效果（科技风适配） */
+        .grid-item.wrong-click {
+            border-color: var(--accent-pink); /* 粉色边框标识错误 */
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+            animation: shake 0.3s ease; /* 抖动动画 */
+        }
 
-/* 最终文本显示样式 - 科技风适配 */
-.result-text {
-    font-size: 1.25rem; /* 修改：字号改为1.25rem */
-    line-height: 1.6;
-    color: var(--text-light);
-    max-width: 600px;
-    padding: 20px;
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
-    border: 1px solid var(--accent-purple);
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3), 0 0 15px var(--shadow-purple);
-    /* 核心修改：绝对定位覆盖九宫格区域 */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    box-sizing: border-box;
-    /* 透明度初始为0，通过类控制显示 */
-    opacity: 0;
-    transition: opacity 0.8s ease; /* 平滑的透明度过渡 */
-    z-index: 0; /* 确保文本在图片下方，图片消失后显示 */
-    /* 关键修改：结果文本两端对齐，取消居中 */
-    text-align: justify;
-    text-align-last: left;
-    /* 段首空两格 */
-    text-indent: 2em;
-}
+        /* 抖动动画关键帧 */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
 
-/* 移动端适配九宫格 - 核心修改：直接给九宫格容器加滚动条 */
-@media (max-width: 768px) {
-    /* 移除body的滚动（不再需要） */
-    /* 直接给九宫格容器添加水平滚动 */
-    .grid-container {
-        grid-template-columns: repeat(3, 100px);
-        grid-template-rows: repeat(3, 133px);
-        /* 核心新增：开启水平滚动 */
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch; /* 优化iOS滚动体验 */
-        /* 关键：设置容器宽度为100%，内容超出时触发滚动 */
-        width: 100%;
-        /* 取消原有fit-content，改为100%适配屏幕宽度 */
-        max-width: 100%;
-        /* 优化滚动体验：增加内边距，避免内容贴边 */
-        padding: 0 5px;
-        box-sizing: border-box;
-        /* 保留相对定位，不影响result-text的绝对定位 */
-        position: relative;
-    }
-    .grid-item {
-        width: 100px;
-        height: 133px;
-        /* 确保格子尺寸不受容器滚动影响 */
-        flex-shrink: 0;
-    }
-    .result-text {
-        font-size: 1.15rem; /* 移动端适配字号 */
-        padding: 15px;
-        /* 移动端保持两端对齐 */
-        text-align: justify;
-        text-align-last: left;
-        /* 段首空两格 */
-        text-indent: 2em;
-        /* 适配滚动后的容器，文本宽度跟随容器 */
-        max-width: 100%;
-    }
-/* 新增：文本显示的类 */
-.result-text.show {
-    opacity: 1;
-    z-index: 2; /* 显示时层级高于隐藏的图片 */
-}
+        /* 最终文本显示样式 - 科技风适配 */
+        .result-text {
+            font-size: 1.25rem; /* 修改：字号改为1.25rem */
+            line-height: 1.6;
+            color: var(--text-light);
+            max-width: 600px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
+            border: 1px solid var(--accent-purple);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3), 0 0 15px var(--shadow-purple);
+            /* 核心修改：绝对定位覆盖九宫格区域 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            /* 透明度初始为0，通过类控制显示 */
+            opacity: 0;
+            transition: opacity 0.8s ease; /* 平滑的透明度过渡 */
+            z-index: 0; /* 确保文本在图片下方，图片消失后显示 */
+            /* 关键修改：结果文本两端对齐，取消居中 */
+            text-align: justify;
+            text-align-last: left;
+            /* 段首空两格 */
+            text-indent: 2em;
+        }
+
+        /* 文本显示的类（移出媒体查询，确保全局生效） */
+        .result-text.show {
+            opacity: 1;
+            z-index: 2; /* 显示时层级高于隐藏的图片 */
+        }
+
+        /* 移动端适配九宫格 - 优化滚动效果 */
+        @media (max-width: 768px) {
+            .grid-wrapper {
+                padding: 0 5px; /* 移动端缩小左右内边距 */
+            }
+            .grid-container {
+                grid-template-columns: repeat(3, 100px);
+                grid-template-rows: repeat(3, 133px);
+                min-width: 320px; /* 3*100px + 2*10px = 320px，适配移动端小屏幕 */
+            }
+            .grid-item {
+                width: 100px;
+                height: 133px;
+            }
+            .result-text {
+                font-size: 1.15rem; /* 移动端适配字号 */
+                padding: 15px;
+                /* 移动端保持两端对齐 */
+                text-align: justify;
+                text-align-last: left;
+                /* 段首空两格 */
+                text-indent: 2em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1295,7 +1293,7 @@
                 </div>
             </section>
 
-            <!-- 3. 易传播性模块 -->
+            <!-- 3. 易传播性模块 - 修复九宫格滚动 -->
             <section id="spreadable" class="content-section">
                 <h2 class="section-title">易传播性</h2>
                 <div class="main-tab-nav">
@@ -1309,14 +1307,18 @@
                             <!-- 提示信息区域 -->
                             <div class="hint" id="hint"></div>
 
-                            <!-- 九宫格容器 -->
-                            <div class="grid-container" id="gridContainer">
-                                <!-- 最终结果文本区域 - 移到九宫格容器内部 -->
-                                <div class="result-text" id="resultText">
-                                    “参考文献”梗标准化的复制框架，也降低了其传播门槛。网友只需保留“文献”的特定格式、替换具体主题，就能快速产生新的内容。
+                            <!-- 新增：添加grid-wrapper滚动容器（关键） -->
+                            <div class="grid-wrapper">
+                                <!-- 九宫格容器 -->
+                                <div class="grid-container" id="gridContainer">
+                                    <!-- 最终结果文本区域 - 移到九宫格容器内部 -->
+                                    <div class="result-text" id="resultText">
+                                        “参考文献”梗标准化的复制框架，也降低了其传播门槛。网友只需保留“文献”的特定格式、替换具体主题，就能快速产生新的内容。
+                                    </div>
+                                    <!-- 九宫格图片会通过JS动态生成 -->
                                 </div>
-                                <!-- 九宫格图片会通过JS动态生成 -->
                             </div>
+
                             <!-- 新增：九宫格下方标注 -->
                             <div class="grid-caption">（点击图片，找出相同格式的梗表达）</div>
                         </div>
@@ -1339,7 +1341,6 @@
                                 <div class="chain-node">
                                     <div class="node-dot"></div>
                                     <div>迭代传播(丰富格式)：得知自己是广东人，吃着白切鸡哭了整整一下午 </div>
-
                                 </div>
                             </div>
                             <!-- ========== 新增的补充说明文字 - 添加样式 ========== -->
@@ -1560,7 +1561,7 @@
                 }
             }
             return -1;
-            }
+        }
 
         // 处理图片点击事件
         function handleItemClick(e) {
